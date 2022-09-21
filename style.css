@@ -1,4 +1,8 @@
-.start {
+body {
+    background-color: rgb(177, 182, 204);
+}
+
+article {
     display: flex;
     flex-direction: column;
 
