@@ -13,7 +13,7 @@
 
 <body class="container">
     <article class="start">
-        <h1 class="mt-5 text-center">나랑 꼭 닮은 세렝게티 동물은?</h1>
+        <h1 class="mt-5 text-center">나랑 꼭 닮은 동물은?</h1>
         <button type="button" class="btn btn-warning mt-5" onclick="start()">테스트 시작하기</button>
     </article>
     <article class="question">
@@ -25,6 +25,11 @@
         <input id="type" type="hidden" value="EI">
         <button id="A" type="button" class="btn btn-warning  mt-5">Warning</button>
         <button id="B" type="button" class="btn btn-warning  mt-5">Warning</button>
+    </article>
+    <article class="result">
+        <img class="rounded-pill" id="img" src="" alt="animal">
+        <h2 class="text-center mt-5" id="animal">동물이름</h2>
+        <h3 class="text-center mt-5" id="explain">설명</h3>
     </article>
     <input type="hidden" id="EI" value="0">
     <input type="hidden" id="SN" value="0">
@@ -39,18 +44,57 @@
     <script>
         var num = 1;
         var q = {
-            1: { "title": "문제 1번", "type": "EI", "A": "E", "B": "I" },
-            2: { "title": "문제 2번", "type": "EI", "A": "E", "B": "I" },
-            3: { "title": "문제 3번", "type": "EI", "A": "E", "B": "I" },
+            1: { "title": "문제 1번", "type": "EI", "A": "나는 낯선 사람과 말하는 것을 좋아한다.", "B": "나는 낯선 사람과 말하는 것을 즐기지 않는다." },
+            2: { "title": "문제 2번", "type": "EI", "A": "나는 밖에 있으면 에너지가 충전된다.", "B": "나는 집에 있으면 에너지가 충전된다." },
+            3: { "title": "문제 3번", "type": "EI", "A": "다른 사람에게 내 이야기를 하는 것이 즐겁다.", "B": "다른 사람에게 내 이야기를 하는 것이 불편하다." },
+            4: { "title": "문제 4번", "type": "SN", "A": "객관적 사실이 중요하다.", "B": "내 직감과 본능이 중요하다." },
+            5: { "title": "문제 5번", "type": "SN", "A": "눈 앞에 놓인 사실을 가지고 판단한다.", "B": "여러 가지 상황과 가능성을 고려한다." },
+            6: { "title": "문제 6번", "type": "SN", "A": "아무 생각 안한다는 것은 정말 아무런 생각이 없는 것이다.", "B": "아무 생각 안한다는 것은 일단 아무 생각이 없는 상태를 상상하는 것이다." },
+            7: { "title": "문제 7번", "type": "TF", "A": "결과가 중요하다", "B": "과정이 중요하다" },
+            8: { "title": "문제 8번", "type": "TF", "A": "이유를 알아야 납득이 간다.", "B": "상대방의 감정에 따라 결정을 내린다." },
+            9: { "title": "문제 9번", "type": "TF", "A": "머리를 따른다", "B": "가슴을 따른다" },
+            10: { "title": "문제 10번", "type": "JP", "A": "내 일정을 통제 할 수 없을 때 스트레스 받는다.", "B": "통제할 수 없는 것은 장점이다." },
+            11: { "title": "문제 11번", "type": "JP", "A": "효율이 중요하다", "B": "비효율 적이라도 얻은게 있을 수 있다." },
+            12: { "title": "문제 12번", "type": "JP", "A": "계획이 없으면 불안하다.", "B": "계획은 숨막힌다." },
+        }
+
+        var result = {
+            "ISTJ": { "animal": "하마", "explain": "근면 성실한 당신, 집에서도 바쁘게 뭔가를 하려고 하는군요.", "img": "hippo.jpg" },
+            "ENFP": { "animal": "토끼", "explain": "사람을 좋아하는 당신, 토끼같은 맑은 눈을 가졌네요!", "img": "rabbit.jpg" },
+            "ISTP": { "animal": "고양이", "explain": "조용한 관찰자인 당신, 자신을 숨기면서 관찰하는 고양이와 닮았네요!", "img": "cat.jpg" },
+            "ESTJ": { "animal": "사자", "explain": "밀림의 왕 사자처럼 세상을 지배할 것만 같군요!", "img": "lion.jpg" },
+            "ENTJ": { "animal": "호랑이", "explain": "호랑이처럼 위엄있고 자신의 일을 바쁘게 해내는 당신!", "img": "tiger.jpg" },
+            "ESFJ": { "animal": "강아지", "explain": "강아지처럼 다양한 것에 흥미를 느끼고 꾸준히 할 줄 아는 당신! ", "img": "dog.jpg" },
+            "ENFJ": { "animal": "독수리", "explain": "멀리서 큰 그림을 그리며 성실하게 살아가는 독수리와 닮았네요!", "img": "egle.jpg" },
+            "INFP": { "animal": "햄스터", "explain": "햄스터처럼 귀여운 당신!", "img": "hem.jpg" },
+            "INTP": { "animal": "곰", "explain": "곰처럼 낮은 톤으로 세상을 살아가는 당신!", "img": "bear.jpg" },
+            "ISFP": { "animal": "나무늘보", "explain": "'느려", "img": "나무늘보.jpg" },
+            "ISFJ": { "animal": "사슴", "explain": "사슴처럼 맑은 눈으로 상대방을 신경쓰는 당신! 성실하면서 세상을 돌게 하는 원천이네요!", "img": "deer.jpg" },
+            "ESFP": { "animal": "여우", "explain": "여우처럼 매력적인 당신! 모든 사람들이 좋아할 것만 같군요!", "img": "fox.jpg" },
         }
 
         function next() {
-            $(".progress-bar").attr('style', "width: calc(100/12*" + num + "%)");
-            $("#title").html(q[num]["title"]);
-            $("#type").val(q[num]["type"]);
-            $("#A").html(q[num]["A"]);
-            $("#B").html(q[num]["B"]);
-            num++
+            if (num == 13) {
+                $(".question").hide();
+                $(".result").show();
+                var mbti = "";
+                ($("#EI").val() < 2) ? mbti += "I" : mbti += "E";
+                ($("#SN").val() < 2) ? mbti += "N" : mbti += "S";
+                ($("#TF").val() < 2) ? mbti += "F" : mbti += "T";
+                ($("#JP").val() < 2) ? mbti += "P" : mbti += "J";
+                alert(mbti);
+                $("#img").attr("src", result[mbti]["img"]);
+                $("#animal").html(result[mbti]["animal"]);
+                $("#explain").html(result[mbti]["explain"]);
+            } else {
+                $(".progress-bar").attr('style', "width: calc(100/12*" + num + "%)");
+                $("#title").html(q[num]["title"]);
+                $("#type").val(q[num]["type"]);
+                $("#A").html(q[num]["A"]);
+                $("#B").html(q[num]["B"]);
+                num++
+            }
+
         }
 
         function start() {

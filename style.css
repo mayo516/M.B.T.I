@@ -1,5 +1,6 @@
 body {
     background-color: rgb(177, 182, 204);
+
 }
 
 article {
@@ -14,4 +15,19 @@ article {
 
 .question {
     display: none;
+}
+
+.result {
+    display: none;
+
+}
+
+.img {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+#img {
+    margin-top: 100px;
 }
