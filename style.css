@@ -1,0 +1,13 @@
+.start {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.btn {
+    color: rgb(255, 255, 255);
+}
+
+.question {
+    display: none;
+}
